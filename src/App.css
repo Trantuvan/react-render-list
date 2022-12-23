@@ -73,3 +73,9 @@
 .form-submit:hover {
   background-color: #1ac7b6;
 }
+
+.task-list li {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
