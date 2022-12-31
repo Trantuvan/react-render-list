@@ -25,35 +25,34 @@ export default class App extends Component {
   // };
 
   handleChange = (evt) => {
-    // this.setState({
-    //   task: {
-    //     id: this.state.task.id,
-    //     text: evt.target.value,
-    //     order: this.state.task.order,
-    //   },
-    // });
     this.setState({
-      task: { ...this.state.task, text: evt.target.value },
+      task: {
+        id: this.state.task.id,
+        text: evt.target.value,
+        order: this.state.task.order,
+      },
     });
+    // this.setState({
+    //   task: { ...this.state.task, text: evt.target.value },
+    // });
   };
 
   onSubmitTask = (evt) => {
     evt.preventDefault();
 
     if (this.state.isEdit === true) {
-      // const tasksWithOutEdited = this.state.tasks.filter(
-      //   (task) => task.id !== this.state.task.id
-      // );
-      // console.log(tasksWithOutEdited);
+      const tasksClone = [...this.state.tasks];
+      const editIndex = tasksClone.findIndex(
+        (task) => task.id === this.state.task.id
+      );
+      tasksClone[editIndex] = this.state.task;
+
       this.setState({
-        tasks: [
-          ...this.state.tasks,
-          // { ...this.state.task, id: uniqid(), text: this.state.task.text },
-          this.state.task,
-        ],
+        tasks: tasksClone,
         task: { id: uniqid(), text: "", order: this.state.task.order + 1 },
         isEdit: false,
       });
+      return;
     }
 
     this.setState({
@@ -77,7 +76,6 @@ export default class App extends Component {
     this.setState({
       task: this.state.tasks.find((task) => task.id === taskId),
       isEdit: true,
-      tasks: this.state.tasks.filter((task) => task.id !== taskId),
     });
   };
 
